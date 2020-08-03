@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+</head>
+
+<body>
+    <h1>Hello world</h1>
+    
+    <form>
+        <input type="text" id="msg" placeholder="click this line">
+        <button type="submit">Send</button>
+    </form>
+
+    <p id="isi"></p>
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- <script>
+        // localStorage.debug = 'socket.io-client:socket';
+        var socket = io();
+        // socket.on(`testerEvent`, (data) => {
+        //     document.write(data.description)
+        // })
+        // socket.emit('clientEvent', `AjiDk`)
+        // socket.on(`sendToClient`, (data) => {
+        //     document.write(data)
+        // })
+        socket.on('broadcast', (data) => {
+        console.log(data.description);
+        
+        // document.write(data.description)
+        $('form').submit(function (e) { 
+            e.preventDefault();
+            socket.emit('broadcast', $('#msg').val())
+            $('#msg').val(' ');
+
+        });
+        })
+    </script> -->
+    <!-- <script>
+        let socket = io('/queue')
+        socket.on('antrian', (data) => {
+            document.write(data)
+        })
+    </script> -->
+    <script>
+        $(function () {
+            let socket = io();
+            $('form').submit(function (e) { 
+                e.preventDefault();
+                socket.emit('clientEvent', $('#msg').val())
+                $('#msg').val()
+                return false
+            });
+            socket.on('sendToClient', (data) => {
+                $('#isi').append(`${data} <br>`)
+            })
+        })
+    </script>
+
+</body>
+
+</html>
